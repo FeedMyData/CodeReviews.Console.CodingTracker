@@ -27,7 +27,10 @@ internal class Enums
     [Display(Name = "View all the coding sessions")]
     viewItems,
 
-    [Display(Name = "Add an entry")]
+    [Display(Name = "Start a session now")]
+    addItemStartNow,
+
+    [Display(Name = "Add a previous session")]
     addItem,
 
     [Display(Name = "Delete an entry")]

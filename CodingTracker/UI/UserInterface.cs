@@ -18,6 +18,10 @@ internal class UserInterface
 
       switch (selection)
       {
+        case MenuItem.addItemStartNow:
+          //addItemStartNow();
+          break;
+
         case MenuItem.viewItems:
           //ViewItems();
           break;
@@ -39,5 +43,10 @@ internal class UserInterface
           break;
       }
     }
+  }
+
+  internal static void AddItem()
+  {
+    //var date = AnsiConsole.Ask<string>(""):
   }
 }
