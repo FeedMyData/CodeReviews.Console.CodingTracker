@@ -6,7 +6,6 @@
 // Id, StartTime, EndTime, Duration. When reading from the database, you can't use an anonymous object, you have to read your table into a List of CodingSession.
 // ** The user shouldn't input the duration of the session. It should be calculated based on the Start and End times
 // The user should be able to input the start and end times manually.
-// You need to use Dapper ORM for the data access instead of ADO.NET. (This requirement was included in Feb/2024)
 
 // Challenges
 // Add the possibility of tracking the coding time via a stopwatch so the user can track the session as it happens.
@@ -16,10 +15,7 @@
 using Spectre.Console;
 using Microsoft.Data.Sqlite;
 using System.Diagnostics;
-using System.Transactions;
 using System.Globalization;
-using SQLitePCL;
-
 
 class Program
 {

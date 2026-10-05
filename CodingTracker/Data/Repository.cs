@@ -14,20 +14,16 @@ internal class Repository
 
     using (var connection = new SqliteConnection(connectionString))
     {
-      connection.Open();
-
-      using var existsCommand = connection.CreateCommand();
-      existsCommand.CommandText =
+      const string existsSql =
         $@"SELECT EXISTS (
         SELECT name
         FROM sqlite_master
         WHERE type = 'table'
         AND name = 'coding_tracker')";
 
-      tableExisted = Convert.ToBoolean(existsCommand.ExecuteScalar());
+      tableExisted = connection.ExecuteScalar<bool>(existsSql);
 
-      var createCommand = connection.CreateCommand();
-      createCommand.CommandText =
+      string createSql =
         $@"CREATE TABLE IF NOT EXISTS coding_tracker(
         {Column.id} INTEGER PRIMARY KEY AUTOINCREMENT,
         {Column.activity} TEXT,
@@ -35,7 +31,7 @@ internal class Repository
         {Column.endTime} TEXT,
         {Column.duration} INTEGER)";
 
-      createCommand.ExecuteNonQuery();
+      connection.Execute(createSql);
     }
 
     // if (!tableExisted)
