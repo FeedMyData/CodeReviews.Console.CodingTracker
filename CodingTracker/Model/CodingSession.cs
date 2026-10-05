@@ -9,10 +9,13 @@ class CodingSession
   internal int Id { get; private set; }
   internal string StartTime { get; private set; }
   internal string EndTime { get; private set; }
-  internal string Duration { get; private set; }
+  internal int Duration { get; private set; }
 
-  internal CodingSession(DateTime dateTime, DateTime endtime, TimeSpan duration)
+  internal CodingSession(int id, DateTime startTime, DateTime endtime, TimeSpan duration)
   {
-    Id =
+    Id = id;
+    StartTime = Convert.ToString(startTime);
+    EndTime = Convert.ToString(endtime);
+    Duration = duration;
   }
 }
