@@ -1,10 +1,10 @@
-using System.Runtime.CompilerServices;
 using Dapper;
 using Microsoft.Data.Sqlite;
+using static CodingTracker.Enums;
 
 namespace CodingTracker;
 
-internal class CodingTrackerRepository
+internal class Repository
 {
   static string connectionString = @"Data Source=CodingTracker.db";
 
@@ -38,8 +38,8 @@ internal class CodingTrackerRepository
       createCommand.ExecuteNonQuery();
     }
 
-    if (!tableExisted)
-      DebugTool.SeedData();
+    // if (!tableExisted)
+    // DebugTool.SeedData();
   }
 
   internal static void Add(string activity, string startTime, string endTime, int duration)
@@ -52,10 +52,40 @@ internal class CodingTrackerRepository
 
     connection.Execute(sql, new
     {
-      activity,
-      startTime,
-      endTime,
-      duration
+      activity = activity,
+      startTime = startTime,
+      endTime = endTime,
+      duration = duration
+    });
+  }
+
+  internal static void Delete(CodingSession entry)
+  {
+    string sql = @$"DELETE FROM coding_tracker WHERE {Column.id} = @id";
+
+    using var connection = new SqliteConnection(connectionString);
+
+    connection.Execute(sql, new { id = entry.Id });
+  }
+
+  internal static void Update(CodingSession entry)
+  {
+    string sql = @$"UPDATE coding_tracker 
+                    SET activity = @activity, 
+                        startTime = @startTime, 
+                        endTime = @endTime,
+                        duration = @duration 
+                    WHERE id = @id";
+
+    using var connection = new SqliteConnection(connectionString);
+
+    connection.Execute(sql, new
+    {
+      activity = entry.Activity,
+      startTime = entry.StartTime,
+      endTime = entry.EndTime,
+      duration = entry.Duration,
+      id = entry.Id
     });
   }
 }
