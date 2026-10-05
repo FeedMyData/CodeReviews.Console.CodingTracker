@@ -19,27 +19,23 @@ internal class UserInterface
       switch (selection)
       {
         case MenuItem.viewItems:
-          ViewItems();
+          //ViewItems();
           break;
 
-        case MenuItem.viewItems:
-          ViewItems();
+        case MenuItem.addItem:
+          //AddItem();
           break;
 
-        case MenuItem.viewItems:
-          ViewItems();
+        case MenuItem.deleteItem:
+          //DeleteItem();
           break;
 
-        case MenuItem.viewItems:
-          ViewItems();
+        case MenuItem.editItem:
+          //EditItem();
           break;
 
-        case MenuItem.viewItems:
-          ViewItems();
-          break;
-
-        case MenuItem.viewItems:
-          ViewItems();
+        case MenuItem.exit:
+          exitApp = true;
           break;
       }
     }
