@@ -1,7 +1,7 @@
 using Spectre.Console;
 using static CodingTracker.Enums;
 
-namespace CodingSession;
+namespace CodingTracker;
 
 internal class UserInterface
 {
@@ -11,34 +11,38 @@ internal class UserInterface
 
     while (!exitApp)
     {
+
+
       var selection = AnsiConsole.Prompt(
-          new SelectionPrompt<MenuItem>()
+          new SelectionPrompt<MenuChoice>()
           .Title("What do you want to do?")
-          .AddChoices(Enum.GetValues<MenuItem>()));
+          .HighlightStyle(Color.Grey)
+          .UseConverter(choice => choice.GetDisplayName())
+          .AddChoices(Enum.GetValues<MenuChoice>()));
 
       switch (selection)
       {
-        case MenuItem.addItemStartNow:
-          //addItemStartNow();
+        case MenuChoice.addItemStartNow:
+          TimeUtilities.CodingSession();
           break;
 
-        case MenuItem.viewItems:
+        case MenuChoice.viewItems:
           //ViewItems();
           break;
 
-        case MenuItem.addItem:
+        case MenuChoice.addItem:
           //AddItem();
           break;
 
-        case MenuItem.deleteItem:
-          //DeleteItem();
-          break;
-
-        case MenuItem.editItem:
+        case MenuChoice.editItem:
           //EditItem();
           break;
 
-        case MenuItem.exit:
+        case MenuChoice.deleteItem:
+          //DeleteItem();
+          break;
+
+        case MenuChoice.exit:
           exitApp = true;
           break;
       }
@@ -48,5 +52,13 @@ internal class UserInterface
   internal static void AddItem()
   {
     //var date = AnsiConsole.Ask<string>(""):
+  }
+
+  internal static void PrintTitle()
+  {
+    Console.Clear();
+    AnsiConsole.Write(new Panel("   Coding Tracker   ")
+      .AsciiBorder());
+    AnsiConsole.WriteLine();
   }
 }

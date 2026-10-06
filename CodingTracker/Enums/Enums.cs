@@ -22,22 +22,22 @@ internal class Enums
     duration
   }
 
-  internal enum MenuItem
+  internal enum MenuChoice
   {
-    [Display(Name = "View all the coding sessions")]
-    viewItems,
-
-    [Display(Name = "Start a session now")]
+    [Display(Name = "[green]Start[/] a session now")]
     addItemStartNow,
 
-    [Display(Name = "Add a previous session")]
+    [Display(Name = "View entries")]
+    viewItems,
+
+    [Display(Name = "[green]Add[/] a previous session")]
     addItem,
 
-    [Display(Name = "Delete an entry")]
-    deleteItem,
-
-    [Display(Name = "Edit an entry")]
+    [Display(Name = "[blue]Edit[/] an entry")]
     editItem,
+
+    [Display(Name = "[red]Delete[/] an entry")]
+    deleteItem,
 
     [Display(Name = "Exit")]
     exit,

@@ -2,44 +2,84 @@ using Spectre.Console;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace CodingSession;
+namespace CodingTracker;
 
 internal class TimeUtilities
 {
-  // Session with StopWatch & Automatic Entry
-  private static TimeSpan LaunchSessionNow()
+  internal static void CodingSession()
   {
-    DateTime startSession = DateTime.Now;
+    DateTime currentDate = DateTime.Now;
     Stopwatch stopwatch = Stopwatch.StartNew();
 
-    AnsiConsole.WriteLine();
-    AnsiConsole.MarkupLine($"[green]Coding session started.[/]");
-    AnsiConsole.MarkupLine($"[green]{startSession}[/]");
-    AnsiConsole.MarkupLine("[Grey]Toggle Spacebar to pause.[/]");
-    AnsiConsole.WriteLine();
-    AnsiConsole.MarkupLine($"Elapsed time: ");
+    ConsoleKeyInfo input = new();
 
+    while (input.Key != ConsoleKey.Escape)
+    {
+      SessionStatut(currentDate, stopwatch);
+      LiveTimer(stopwatch);
+
+      if (Console.KeyAvailable)
+      {
+        input = Console.ReadKey();
+
+        if (stopwatch.IsRunning && input.Key == ConsoleKey.Spacebar)
+          stopwatch.Stop();
+
+        else if (!stopwatch.IsRunning && input.Key == ConsoleKey.Spacebar)
+          stopwatch.Start();
+      }
+    }
+  }
+
+  internal static void SessionStatut(DateTime date, Stopwatch stopwatch)
+  {
+    string colorHighlight;
+    string state;
+    string action;
+
+    string dateDisplay = date.ToString("ddd d MMMM yyyy");
+
+    if (stopwatch.IsRunning)
+    {
+      colorHighlight = "green";
+      state = "active";
+      action = "pause";
+    }
+
+    else
+    {
+      colorHighlight = "blue";
+      state = "paused";
+      action = "resume";
+    }
+    Console.Clear();
+    UserInterface.PrintTitle();
+
+    AnsiConsole.MarkupLine($"[{colorHighlight}]Coding session {state}.[/]");
+    AnsiConsole.MarkupLine($"[Grey]Toggle Spacebar to {action} session.[/]");
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine(dateDisplay);
+    AnsiConsole.MarkupLine($"Elapsed time: ");
+  }
+
+  internal static void LiveTimer(Stopwatch stopwatch)
+  {
     int clockRow = Console.CursorTop;
 
     bool cursorVisible = Console.CursorVisible;
     Console.CursorVisible = false;
 
-    while (true)
+    while (!Console.KeyAvailable)
     {
+      string stopwatchDisplay = stopwatch.Elapsed.ToString(@"hh\:mm\:ss");
       Console.SetCursorPosition(0, clockRow);
-      Console.Write(stopwatch.Elapsed.ToString(@"hh\:mm\:ss"));
-
-      if (Console.KeyAvailable && Console.ReadKey(intercept: true).Key == ConsoleKey.Spacebar)
-        break;
+      Console.Write(stopwatchDisplay);
 
       Thread.Sleep(100);
     }
-
     AnsiConsole.WriteLine("\n");
 
     Console.CursorVisible = cursorVisible;
-
-    return stopwatch.Elapsed;
   }
 
   // static void test()
