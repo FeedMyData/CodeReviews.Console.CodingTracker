@@ -23,7 +23,7 @@ internal class UserInterface
       switch (selection)
       {
         case MenuChoice.addItemStartNow:
-          TimeUtilities.CodingSession();
+          LiveSession.Launch();
           break;
 
         case MenuChoice.viewItems:

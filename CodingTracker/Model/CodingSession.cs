@@ -8,12 +8,12 @@ class CodingSession
   internal string EndTime { get; private set; }
   internal int Duration { get; private set; }
 
-  internal CodingSession(int id, string activity, DateTime startTime, DateTime endtime, TimeSpan duration)
+  internal CodingSession(int id, string activity, string startTime, string endtime, int duration)
   {
     Id = id;
     Activity = activity;
-    StartTime = Convert.ToString(startTime);
-    EndTime = Convert.ToString(endtime);
-    Duration = Convert.ToInt32(duration);
+    StartTime = startTime;
+    EndTime = endtime;
+    Duration = duration;
   }
 }

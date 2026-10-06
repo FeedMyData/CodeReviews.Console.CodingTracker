@@ -13,11 +13,10 @@ class Program
 {
   static void Main(string[] args)
   {
+    Repository.CreateDB();
     PrintTitle();
     MainMenu();
   }
-
-  // Get Date info from User
 }
 
 
