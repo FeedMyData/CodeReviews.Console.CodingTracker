@@ -1,5 +1,6 @@
 using Spectre.Console;
 using static CodingTracker.Enums;
+using static CodingTracker.TimeFormatter;
 
 namespace CodingTracker;
 
@@ -11,8 +12,6 @@ internal class UserInterface
 
     while (!exitApp)
     {
-
-
       var selection = AnsiConsole.Prompt(
           new SelectionPrompt<MenuChoice>()
           .Title("What do you want to do?")
@@ -27,7 +26,7 @@ internal class UserInterface
           break;
 
         case MenuChoice.viewItems:
-          //ViewItems();
+          ViewAll();
           break;
 
         case MenuChoice.addItem:
@@ -52,6 +51,33 @@ internal class UserInterface
   internal static void AddItem()
   {
     //var date = AnsiConsole.Ask<string>(""):
+  }
+
+  internal static void ViewAll()
+  {
+    List<CodingSession> tableData = Query.ViewAll();
+    GenerateTable(tableData, "[bold] all Sessions[/]");
+  }
+
+  internal static void GenerateTable(List<CodingSession> tableData, string title)
+  {
+    var table = new Table()
+            .RoundedBorder()
+            .Title(title);
+
+    foreach (string column in Enum.GetNames<Column>())
+      table.AddColumn(column);
+
+    foreach (var entry in tableData)
+      //table.AddRow($"{entry.Id}", $"{entry.Activity}", $"{entry.StartTime}", $"{entry.EndTime}", $"{entry.Duration}");
+      table.AddRow(
+        Markup.Escape(entry.Id.ToString()),
+        Markup.Escape(entry.Activity),
+        Markup.Escape(entry.StartTime),
+        Markup.Escape(entry.EndTime),
+        Markup.Escape(entry.Duration.ToString()));
+
+    AnsiConsole.Write(table);
   }
 
   internal static void PrintTitle()
