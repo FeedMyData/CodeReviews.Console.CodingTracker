@@ -8,12 +8,12 @@ class CodingSession
   internal string EndTime { get; private set; }
   internal int Duration { get; private set; }
 
-  internal CodingSession(int id, string activity, string startTime, string endtime, int duration)
+  internal CodingSession(Int64 id, string activity, string startTime, string endTime, Int64 duration)
   {
-    Id = id;
+    Id = (int)id;
     Activity = activity;
     StartTime = startTime;
-    EndTime = endtime;
-    Duration = duration;
+    EndTime = endTime;
+    Duration = (int)duration;
   }
 }
