@@ -35,7 +35,8 @@ internal class LiveSession
     SessionOverStatus(startDate, stopwatch);
 
     AnsiConsole.MarkupLine("[grey]Press 'Enter' to autofill with the last activity registered.[/]");
-    var activity = new TextPrompt<string>("[yellow]What were you working on?[/]").AllowEmpty();
+    var prompt = new TextPrompt<string>("[yellow]What were you working on?[/]").AllowEmpty();
+    string activity = AnsiConsole.Prompt(prompt);
 
     //add autoFill feature, query the DB for Last activity, catch empty DB
 
@@ -45,7 +46,10 @@ internal class LiveSession
             DisplayDate(endDate),
             MinutesToInt(stopwatch.Elapsed));
 
-    AnsiConsole.MarkupLine("The session has been [green]added[/] to the DB");
+    AnsiConsole.MarkupLine("[green]The session has been added to the DB[/]");
+    //Add a query that display the last DB entry.
+
+    AnsiConsole.WriteLine();
   }
 
   private static void SessionActiveStatus(DateTime date, Stopwatch stopwatch)
