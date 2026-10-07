@@ -38,7 +38,7 @@ internal class Repository
       DebugTool.SeedData();
   }
 
-  internal static void Add(string activity, string startTime, string endTime, int duration)
+  private static void Add(string activity, string startTime, string endTime, int duration)
   {
     string sql = @$"INSERT INTO coding_tracker 
                   (activity, startTime, endTime, duration)
@@ -53,6 +53,15 @@ internal class Repository
       endTime = endTime,
       duration = duration
     });
+  }
+
+  internal static void AddConverter(string activity, DateTime startTime, DateTime endTime, TimeSpan duration)
+  {
+    string startTimeDB = TimeFormatter.ConvertDateForDb(startTime);
+    string endTimeDB = TimeFormatter.ConvertDateForDb(endTime);
+    int durationDB = TimeFormatter.MinutesToInt(duration);
+
+    Add(activity, startTimeDB, endTimeDB, durationDB);
   }
 
   internal static void Delete(CodingSession entry)

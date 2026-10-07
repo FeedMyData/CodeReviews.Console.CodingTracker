@@ -12,7 +12,7 @@ internal class Query
   internal static List<CodingSession> ViewAll()
   {
     using var connection = new SqliteConnection(ConnectionString);
-    string sql = @$"SELECT * FROM coding_tracker";
+    string sql = @$"SELECT * FROM coding_tracker ORDER BY startTime DESC";
 
     var codingSessions = connection.Query<CodingSession>(sql).ToList();
 

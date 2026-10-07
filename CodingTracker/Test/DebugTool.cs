@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection.Metadata;
 using CodingTracker;
 
@@ -8,24 +9,21 @@ internal class DebugTool
   internal static void SeedData()
   {
     string[] activities = ["Coding Tracker", "Habit Logger", "Website"];
-    DateTime randomStartDate = RandomDateTime();
+    DateTime startDate = RandomDateTime();
     Random rand = new();
 
     for (int i = 0; i < 100; i++)
     {
-      int addDay = rand.Next(0, 4);
-      int addMinutes = rand.Next(0, 580);
-      randomStartDate = randomStartDate.AddDays(addDay).AddMinutes(addMinutes);
+      int randDay = rand.Next(0, 4);
+      int randMinutes = rand.Next(0, 580);
+      startDate = startDate.AddDays(randDay).AddMinutes(randMinutes);
 
       string activity = activities[rand.Next(0, activities.Length)];
 
-      int duration = rand.Next(5, 380);
-      DateTime endDateResult = randomStartDate.AddMinutes(duration);
+      TimeSpan duration = TimeSpan.FromMinutes(rand.Next(5, 440));
+      DateTime endDate = startDate.AddMinutes((int)duration.TotalMinutes);
 
-      string startdate = TimeFormatter.DisplayDate(randomStartDate);
-      string endDate = TimeFormatter.DisplayDate(endDateResult);
-
-      Repository.Add(activity, startdate, endDate, duration);
+      Repository.AddConverter(activity, startDate, endDate, duration);
     }
   }
 

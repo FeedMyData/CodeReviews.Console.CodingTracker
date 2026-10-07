@@ -69,13 +69,12 @@ internal class UserInterface
       table.AddColumn(column);
 
     foreach (var entry in tableData)
-      //table.AddRow($"{entry.Id}", $"{entry.Activity}", $"{entry.StartTime}", $"{entry.EndTime}", $"{entry.Duration}");
       table.AddRow(
         Markup.Escape(entry.Id.ToString()),
         Markup.Escape(entry.Activity),
-        Markup.Escape(entry.StartTime),
-        Markup.Escape(entry.EndTime),
-        Markup.Escape(entry.Duration.ToString()));
+        Markup.Escape(ConvertDateOutDb(entry.StartTime)),
+        Markup.Escape(ConvertHourOutDb(entry.EndTime)),
+        Markup.Escape(ConvertDurationOutDb(entry.Duration)));
 
     AnsiConsole.Write(table);
   }

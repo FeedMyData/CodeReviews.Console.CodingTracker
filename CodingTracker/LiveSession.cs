@@ -40,11 +40,7 @@ internal class LiveSession
 
     //add autoFill feature, query the DB for Last activity, catch empty DB
 
-    Repository.Add(
-            activity.ToString(),
-            DisplayDate(startDate),
-            DisplayDate(endDate),
-            MinutesToInt(stopwatch.Elapsed));
+    Repository.AddConverter(activity, startDate, endDate, stopwatch.Elapsed);
 
     AnsiConsole.MarkupLine("[green]The session has been added to the DB[/]");
     //Add a query that display the last DB entry.
