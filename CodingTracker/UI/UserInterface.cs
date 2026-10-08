@@ -1,3 +1,4 @@
+using CodingSession;
 using Spectre.Console;
 using static CodingTracker.Enums;
 using static CodingTracker.TimeFormatter;
@@ -30,7 +31,7 @@ internal class UserInterface
           break;
 
         case MenuChoice.addItem:
-          //AddItem();
+          AddItem();
           break;
 
         case MenuChoice.editItem:
@@ -50,40 +51,27 @@ internal class UserInterface
 
   internal static void AddItem()
   {
-    //var date = AnsiConsole.Ask<string>(""):
+    string colorHighlight = "green";
+
+    AnsiConsole.MarkupLine($"[{colorHighlight}]Add Session[/]");
+
+    string startDate = GetTimeFromUser(DaTeStyleShort, "Day").ToString(DaTeStyleShort);
+    string startHour = GetTimeFromUser(DateStyleHour, "start hour").ToString(DateStyleHour);
+    string endHour = GetTimeFromUser(DateStyleHour, "end hour").ToString(DateStyleHour);
+    string activity = ChoicesPrompt.AskForActivity();
+
+    string[] timeInfos = FormatTimeInfo(startDate, startHour, endHour);
+
+    AnsiConsole.WriteLine();
+    Displayer.PreviewNewRow(activity, timeInfos[0], timeInfos[1], Convert.ToInt32(timeInfos[2]));
+    AnsiConsole.WriteLine();
+    AnsiConsole.MarkupLine($"[{colorHighlight}]The new session has been added to the database.[/]");
+    AnsiConsole.WriteLine();
   }
 
   internal static void ViewAll()
   {
     List<CodingSession> tableData = Query.ViewAll();
-    GenerateTable(tableData, "[bold] all Sessions[/]");
-  }
-
-  internal static void GenerateTable(List<CodingSession> tableData, string title)
-  {
-    var table = new Table()
-            .RoundedBorder()
-            .Title(title);
-
-    foreach (string column in Enum.GetNames<Column>())
-      table.AddColumn(column);
-
-    foreach (var entry in tableData)
-      table.AddRow(
-        Markup.Escape(entry.Id.ToString()),
-        Markup.Escape(entry.Activity),
-        Markup.Escape(ConvertDateOutDb(entry.StartTime)),
-        Markup.Escape(ConvertHourOutDb(entry.EndTime)),
-        Markup.Escape(ConvertDurationOutDb(entry.Duration)));
-
-    AnsiConsole.Write(table);
-  }
-
-  internal static void PrintTitle()
-  {
-    Console.Clear();
-    AnsiConsole.Write(new Panel("   Coding Tracker   ")
-      .AsciiBorder());
-    AnsiConsole.WriteLine();
+    Displayer.PrintTable(tableData, "[bold] all Sessions[/]");
   }
 }

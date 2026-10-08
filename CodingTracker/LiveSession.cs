@@ -1,3 +1,4 @@
+using CodingSession;
 using Spectre.Console;
 using System.Diagnostics;
 using static CodingTracker.TimeFormatter;
@@ -34,13 +35,11 @@ internal class LiveSession
 
     SessionOverStatus(startDate, stopwatch);
 
-    AnsiConsole.MarkupLine("[grey]Press 'Enter' to autofill with the last activity registered.[/]");
-    var prompt = new TextPrompt<string>("[yellow]What were you working on?[/]").AllowEmpty();
-    string activity = AnsiConsole.Prompt(prompt);
+    string activity = ChoicesPrompt.AskForActivity();
 
     //add autoFill feature, query the DB for Last activity, catch empty DB
 
-    Repository.AddConverter(activity, startDate, endDate, stopwatch.Elapsed);
+    Repository.ConvertAndAdd(activity, startDate, endDate, stopwatch.Elapsed);
 
     AnsiConsole.MarkupLine("[green]The session has been added to the DB[/]");
     //Add a query that display the last DB entry.
@@ -69,7 +68,7 @@ internal class LiveSession
     }
 
     Console.Clear();
-    UserInterface.PrintTitle();
+    Displayer.PrintTitle();
 
     AnsiConsole.MarkupLine($"Coding session [{colorHighlight}]{state}.[/]");
     AnsiConsole.MarkupLine($"[Grey]Toggle 'Spacebar' to {action} session, 'Enter' to terminate.[/]");
@@ -80,7 +79,7 @@ internal class LiveSession
   private static void SessionOverStatus(DateTime date, Stopwatch stopwatch)
   {
     Console.Clear();
-    UserInterface.PrintTitle();
+    Displayer.PrintTitle();
 
     AnsiConsole.MarkupLine($"Coding session [yellow]done.[/]");
     AnsiConsole.WriteLine();

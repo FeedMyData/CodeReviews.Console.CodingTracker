@@ -1,0 +1,56 @@
+using Spectre.Console;
+using static CodingTracker.Enums;
+using static CodingTracker.TimeFormatter;
+using System.Linq;
+
+namespace CodingTracker;
+
+internal class Displayer
+{
+  internal static void PreviewNewRow(string activity, string startTime, string endTime, int duration)
+  {
+    var table = new Table()
+            .RoundedBorder();
+
+    table.AddColumn(Markup.Escape(Enums.Column.activity.GetDisplayName()));
+    table.AddColumn(Markup.Escape(Enums.Column.startTime.GetDisplayName()));
+    table.AddColumn(Markup.Escape(Enums.Column.endTime.GetDisplayName()));
+    table.AddColumn(Markup.Escape(Enums.Column.duration.GetDisplayName()));
+
+    table.AddRow(
+      Markup.Escape(activity),
+      Markup.Escape(ConvertDateOutDb(startTime)),
+      Markup.Escape(ConvertHourOutDb(endTime)),
+      Markup.Escape(ConvertDurationOutDb(duration)));
+
+    AnsiConsole.Write(table);
+  }
+
+  internal static void PrintTable(List<CodingSession> tableData, string title)
+  {
+    var table = new Table()
+            .RoundedBorder()
+            .Title(title);
+
+    foreach (string column in Enum.GetNames<Column>())
+      table.AddColumn(column);
+
+    foreach (var entry in tableData)
+      table.AddRow(
+        Markup.Escape(entry.Id.ToString()),
+        Markup.Escape(entry.Activity),
+        Markup.Escape(ConvertDateOutDb(entry.StartTime)),
+        Markup.Escape(ConvertHourOutDb(entry.EndTime)),
+        Markup.Escape(ConvertDurationOutDb(entry.Duration)));
+
+    AnsiConsole.Write(table);
+  }
+
+  internal static void PrintTitle()
+  {
+    Console.Clear();
+    AnsiConsole.Write(new Panel("   Coding Tracker   ")
+      .AsciiBorder());
+    AnsiConsole.WriteLine();
+  }
+}

@@ -15,8 +15,7 @@ internal class Repository
     using (var connection = new SqliteConnection(ConnectionString))
     {
       const string existsSql =
-        $@"SELECT EXISTS (
-        SELECT name
+        $@"SELECT EXISTS (SELECT name
         FROM sqlite_master
         WHERE type = 'table'
         AND name = 'coding_tracker')";
@@ -55,7 +54,7 @@ internal class Repository
     });
   }
 
-  internal static void AddConverter(string activity, DateTime startTime, DateTime endTime, TimeSpan duration)
+  internal static void ConvertAndAdd(string activity, DateTime startTime, DateTime endTime, TimeSpan duration)
   {
     string startTimeDB = TimeFormatter.ConvertDateForDb(startTime);
     string endTimeDB = TimeFormatter.ConvertDateForDb(endTime);

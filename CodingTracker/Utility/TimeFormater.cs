@@ -6,12 +6,12 @@ namespace CodingTracker;
 
 internal class TimeFormatter
 {
-  public const string DaTeStyleShort = @"yy/MM/dd";
-  public const string DaTeStyleDB = @"yyyy/MM/dd hh:mm";
-  public const string HourStyleShort = @"hh.mm";
-  public const string DateStyleFull = "ddd dd MMM yy - hh:mm";
-  public const string DateStyleHour = "hh:mm";
-  public const string StopWatchStyle = @"hh/mm/ss";
+  public const string DaTeStyleShort = @"yyyy/MM/dd";
+  public const string DaTeStyleDB = @"yyyy/MM/dd HH:mm";
+  public const string HourStyleShort = @"HH.mm";
+  public const string DateStyleFull = "ddd dd MMM yy - HH:mm";
+  public const string DateStyleHour = "HH:mm";
+  public const string StopWatchStyle = @"HH\:mm\:ss";
 
   internal static string DisplayDate(DateTime date)
   {
@@ -51,28 +51,30 @@ internal class TimeFormatter
     return Convert.ToInt32(t.TotalMinutes);
   }
 
-  // internal static string DisplayDurationHM(int duration)
-  // {
-  //   DateTime time = new(2000, 1, 1, 0, 0, 0, 0, 0, 0);
-  //   time.AddMinutes(duration);
-  //   return time.ToString(@"hh\:mm");
-  // }
+  internal static string[] FormatTimeInfo(string startDate, string startHour, string endHour)
+  {
+    string endDate = startDate + " " + endHour;
+    startDate = startDate + " " + startHour;
 
-  // internal static ParseIntToHHMM(int duration)
-  // {
+    DateTime eh = DateTime.Parse(endHour);
+    DateTime sh = DateTime.Parse(startHour);
+    TimeSpan duration;
 
-  // }
+    if (eh < sh) // (add 1 day to the date)
+    {
+      duration = TimeSpan.FromHours(24) - (eh - sh);
+      endDate = (DateTime.Parse(endDate) + TimeSpan.FromDays(1)).ToString(DaTeStyleDB);
+    }
+    else
+      duration = eh - sh;
 
+    string durationString = Convert.ToString(MinutesToInt(duration));
 
+    return [startDate, endDate, durationString];
+  }
 
   internal static DateTime GetTimeFromUser(string expectedFormat, string topic)
   {
-    //   examples for reference
-    //   GetTimeFromUser("dd.MM.yy", "Start date");
-    //   GetTimeFromUser("hh.mm", "Start hour").ToString(@"hh\:mm");
-    //   GetTimeFromUser("dd.MM.yy", "End date");
-    //   GetTimeFromUser("hh.mm", "End hour").ToString(@"hh\:mm");
-
     string errorMessage = $"[red]Format mismatch. Use {expectedFormat}[/]";
 
     string input = AnsiConsole.Prompt(

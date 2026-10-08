@@ -18,4 +18,20 @@ internal class Query
 
     return codingSessions;
   }
+
+  // internal static List<CodingSession> ViewSpecificEntry(string startDate, int duration)
+  // {
+  //   using var connection = new SqliteConnection(ConnectionString);
+  //   string sql = @$"SELECT * FROM coding_tracker 
+  //                           WHERE startDate = @startDate AND duration = @duration
+  //                           LIMIT 1";
+
+  //   var codingSession = connection.Query<CodingSession>(sql, new
+  //                         {
+  //                           startDate = startDate,
+  //                           duration = duration,
+  //                         }).ToList();
+
+  //   return codingSession;
+  // }
 }
