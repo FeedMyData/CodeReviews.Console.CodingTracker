@@ -22,6 +22,14 @@ internal class Query
     return Convert.ToInt32(connection.ExecuteScalar(sql));
   }
 
+  internal static int RowFromID(int id)
+  {
+    using var connection = new SqliteConnection(ConnectionString);
+    string sql = @$"SELECT * FROM coding_tracker WHERE id = @id";
+
+    return Convert.ToInt32(connection.ExecuteScalar(sql, new { id }));
+  }
+
   internal static List<CodingSession> FilterByActivity(string filter)
   {
     using var connection = new SqliteConnection(ConnectionString);
