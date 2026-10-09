@@ -11,7 +11,7 @@ internal class TimeFormatter
   public const string HourStyleShort = @"HH.mm";
   public const string DateStyleFull = "ddd dd MMM yy - HH:mm";
   public const string DateStyleHour = "HH:mm";
-  public const string StopWatchStyle = @"HH\:mm\:ss";
+  public const string StopWatchStyle = @"hh\:mm\:ss";
 
   internal static string DisplayDate(DateTime date)
   {
