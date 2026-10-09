@@ -62,7 +62,7 @@ internal class TimeFormatter
 
     if (eh < sh) // (add 1 day to the date)
     {
-      duration = TimeSpan.FromHours(24) - (eh - sh);
+      duration = TimeSpan.FromHours(24) + (eh - sh);
       endDate = (DateTime.Parse(endDate) + TimeSpan.FromDays(1)).ToString(DaTeStyleDB);
     }
     else
