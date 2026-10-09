@@ -6,10 +6,10 @@ namespace CodingTracker;
 
 internal class ChoicesPrompt
 {
-  internal static string AskForActivity()
+  internal static string AskForActivity(string action, string colorHighlight)
   {
     AnsiConsole.MarkupLine("[grey]Press 'Enter' to autofill with the last activity registered.[/]");
-    var prompt = new TextPrompt<string>("[yellow]Activity?[/]").AllowEmpty();
+    var prompt = new TextPrompt<string>($"[{colorHighlight}]{action}[/] activity:").AllowEmpty();
     return AnsiConsole.Prompt(prompt);
   }
 
@@ -35,12 +35,12 @@ internal class ChoicesPrompt
     }
     else if (selection == choices[1])
     {
-      string activity = AskForActivity();
+      string activity = AskForActivity(action, colorHighlight);
       tableData = Query.FilterByActivity(activity);
     }
     else if (selection == choices[2])
     {
-      string startDate = ConvertDateForDb(GetTimeFromUser(DaTeStyleShort, "Search from Day:", "00:00"));
+      string startDate = ConvertDateForDb(GetTimeFromUser(DaTeStyleShort, "Search from", "00:00"));
       string endDate = ConvertDateForDb(GetTimeFromUser(DaTeStyleShort, "Till :", "23:59"));
       tableData = Query.FilterByDate(startDate, endDate);
     }

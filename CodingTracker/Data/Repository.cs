@@ -37,7 +37,7 @@ internal class Repository
       DebugTool.SeedData();
   }
 
-  private static void Add(string activity, string startTime, string endTime, int duration)
+  internal static void Add(string activity, string startTime, string endTime, int duration)
   {
     string sql = @$"INSERT INTO coding_tracker 
                   (activity, startTime, endTime, duration)
@@ -70,7 +70,7 @@ internal class Repository
     connection.Execute(sql, new { id = entry.Id });
   }
 
-  internal static void Update(CodingSession entry)
+  internal static void UpdateRow(CodingSession entry)
   {
     string sql = @$"UPDATE coding_tracker 
                     SET activity = @activity, 
