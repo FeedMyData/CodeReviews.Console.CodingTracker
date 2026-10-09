@@ -51,10 +51,13 @@ internal class TimeFormatter
     return Convert.ToInt32(t.TotalMinutes);
   }
 
+  /// <summary> return [startDate, endDate, durationString] </summary> <returns></returns>
   internal static string[] FormatTimeInfo(string startDate, string startHour, string endHour)
   {
     string endDate = startDate + " " + endHour;
     startDate = startDate + " " + startHour;
+    string endDate = MergeDateHour(startDate, endHour);
+    startDate = MergeDateHour(startDate, startHour);
 
     DateTime eh = DateTime.Parse(endHour);
     DateTime sh = DateTime.Parse(startHour);
@@ -71,6 +74,21 @@ internal class TimeFormatter
     string durationString = Convert.ToString(MinutesToInt(duration));
 
     return [startDate, endDate, durationString];
+  }
+
+  internal static string TrimHour(string fullDate)
+  {
+    return fullDate.Substring(0, DaTeStyleShort.Length + 1);
+  }
+
+  internal static string TrimDate(string fullDate)
+  {
+    return fullDate.Substring(DaTeStyleShort.Length + 1);
+  }
+
+  internal static string MergeDateHour(string startDate, string hour)
+  {
+    return startDate + " " + hour;
   }
 
   internal static DateTime GetTimeFromUser(string expectedFormat, string topic)
