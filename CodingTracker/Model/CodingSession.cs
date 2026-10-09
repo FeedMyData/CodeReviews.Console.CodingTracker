@@ -36,4 +36,15 @@ class CodingSession
   {
     Activity = activity;
   }
+
+  internal string DisplayData()
+  {
+    string activity = Activity;
+    string startTime = TimeFormatter.ConvertDateOutDb(StartTime);
+    string endTime = TimeFormatter.ConvertHourOutDb(EndTime);
+    string duration = TimeFormatter.ConvertDurationOutDb(Duration);
+
+    return activity.PadRight(25, ' ') + startTime.PadRight(20, ' ') + endTime.PadRight(10, ' ') + duration;
+
+  }
 }
