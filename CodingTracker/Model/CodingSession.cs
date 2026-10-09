@@ -16,4 +16,24 @@ class CodingSession
     EndTime = endTime;
     Duration = (int)duration;
   }
+
+  internal void EditStartTime(string startTime)
+  {
+    StartTime = startTime;
+  }
+
+  internal void EditEndTime(string endTime)
+  {
+    EndTime = endTime;
+  }
+
+  internal void EditDuration(int duration)
+  {
+    Duration = duration;
+  }
+
+  internal void EditActivity(string activity)
+  {
+    Activity = activity;
+  }
 }
