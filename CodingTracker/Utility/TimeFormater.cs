@@ -38,7 +38,6 @@ internal class TimeFormatter
     return DateTime.Parse(dateString).ToString(DateStyleHour);
   }
 
-  internal static string ConvertDurationOutDb(int duration)
   {
     int hours = duration / 60;
     int minutes = duration % 60;
@@ -54,8 +53,6 @@ internal class TimeFormatter
   /// <summary> return [startDate, endDate, durationString] </summary> <returns></returns>
   internal static string[] FormatTimeInfo(string startDate, string startHour, string endHour)
   {
-    string endDate = startDate + " " + endHour;
-    startDate = startDate + " " + startHour;
     string endDate = MergeDateHour(startDate, endHour);
     startDate = MergeDateHour(startDate, startHour);
 

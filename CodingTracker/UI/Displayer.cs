@@ -7,7 +7,7 @@ namespace CodingTracker;
 
 internal class Displayer
 {
-  internal static void PreviewNewRow(string activity, string startTime, string endTime, int duration)
+  internal static void PreviewRow(string activity, string startTime, string endTime, int duration)
   {
     var table = new Table()
             .RoundedBorder();
@@ -21,7 +21,26 @@ internal class Displayer
       Markup.Escape(activity),
       Markup.Escape(ConvertDateOutDb(startTime)),
       Markup.Escape(ConvertHourOutDb(endTime)),
-      Markup.Escape(ConvertDurationOutDb(duration)));
+      Markup.Escape(IntToHHmm(duration)));
+
+    AnsiConsole.Write(table);
+  }
+
+  internal static void PreviewRow(CodingSession session)
+  {
+    var table = new Table()
+            .RoundedBorder();
+
+    table.AddColumn(Markup.Escape(Enums.Column.activity.GetDisplayName()));
+    table.AddColumn(Markup.Escape(Enums.Column.startTime.GetDisplayName()));
+    table.AddColumn(Markup.Escape(Enums.Column.endTime.GetDisplayName()));
+    table.AddColumn(Markup.Escape(Enums.Column.duration.GetDisplayName()));
+
+    table.AddRow(
+      Markup.Escape(session.Activity),
+      Markup.Escape(ConvertDateOutDb(session.StartTime)),
+      Markup.Escape(ConvertHourOutDb(session.EndTime)),
+      Markup.Escape(IntToHHmm(session.Duration)));
 
     AnsiConsole.Write(table);
   }
@@ -41,7 +60,7 @@ internal class Displayer
         Markup.Escape(entry.Activity),
         Markup.Escape(ConvertDateOutDb(entry.StartTime)),
         Markup.Escape(ConvertHourOutDb(entry.EndTime)),
-        Markup.Escape(ConvertDurationOutDb(entry.Duration)));
+        Markup.Escape(IntToHHmm(entry.Duration)));
 
     AnsiConsole.Write(table);
   }
