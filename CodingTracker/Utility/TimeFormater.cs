@@ -25,7 +25,7 @@ internal class TimeFormatter
 
   internal static string ConvertDateForDb(DateTime date)
   {
-    return date.ToString(DaTeStyleDB);
+    return date.ToString(DaTeStyleDB, CultureInfo.InvariantCulture);
   }
 
   internal static string ConvertDateOutDb(string dateString)
@@ -114,9 +114,7 @@ internal class TimeFormatter
             : ValidationResult.Error(errorMessage);
         }));
 
-    string day = DateTime.ParseExact(input, expectedFormat, CultureInfo.InvariantCulture).ToString();
-    string date = day + " " + hour;
-
+    string day = $"{input} {hour}";
     return DateTime.ParseExact(day, DaTeStyleDB, CultureInfo.InvariantCulture);
   }
 }

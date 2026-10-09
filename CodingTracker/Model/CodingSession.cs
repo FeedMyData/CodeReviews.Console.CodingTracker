@@ -45,6 +45,5 @@ class CodingSession
     string duration = TimeFormatter.ConvertDurationOutDb(Duration);
 
     return activity.PadRight(25, ' ') + startTime.PadRight(20, ' ') + endTime.PadRight(10, ' ') + duration;
-
   }
 }

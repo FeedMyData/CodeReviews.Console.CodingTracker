@@ -18,8 +18,8 @@ internal class ChoicesPrompt
     List<CodingSession> tableData = new();
     string[] choices = [
       $"{action} from all",
-      $"{action} from sepecific {Enums.Column.activity.GetDisplayName()}",
-      $"{action} from sepecific Time Range"];
+      $"{action} from specific {Enums.Column.activity.GetDisplayName()}",
+      $"{action} from specific Time Range"];
 
     var selection = AnsiConsole.Prompt(
       new SelectionPrompt<string>()
@@ -30,17 +30,19 @@ internal class ChoicesPrompt
       .AddChoices(choices));
 
     if (selection == choices[0])
-      tableData = Query.ViewAll();
-    else if (selection == choices[1])
     {
-      string startDate = GetTimeFromUser(DaTeStyleShort, "Day", "00:00").ToString();
-      string endDate = GetTimeFromUser(DaTeStyleShort, "Day", "23:59").ToString();
-      tableData = Query.FilterByDate(startDate, endDate);
+      tableData = Query.ViewAll();
     }
-    else
+    else if (selection == choices[1])
     {
       string activity = AskForActivity();
       tableData = Query.FilterByActivity(activity);
+    }
+    else if (selection == choices[2])
+    {
+      string startDate = ConvertDateForDb(GetTimeFromUser(DaTeStyleShort, "Search from Day:", "00:00"));
+      string endDate = ConvertDateForDb(GetTimeFromUser(DaTeStyleShort, "Till :", "23:59"));
+      tableData = Query.FilterByDate(startDate, endDate);
     }
 
     return tableData;
