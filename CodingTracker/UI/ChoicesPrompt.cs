@@ -60,4 +60,16 @@ internal class ChoicesPrompt
 
     return selection;
   }
+
+  public static List<string> SelectMultiString(string action, string colorHighlight, string[] choices)
+  {
+    var selection = AnsiConsole.Prompt(
+      new MultiSelectionPrompt<string>()
+      .Title($"What do you want to [BOLD {colorHighlight}]{action}[/]")
+      .HighlightStyle(colorHighlight)
+      .InstructionsText($"[grey](Press [{colorHighlight}]<space>[/] to toggle, [green]<enter>[/] to confirm)[/]")
+      .AddChoices(choices));
+
+    return selection;
+  }
 }
