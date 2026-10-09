@@ -94,4 +94,29 @@ internal class TimeFormatter
 
     return DateTime.ParseExact(input, expectedFormat, CultureInfo.InvariantCulture);
   }
+
+  internal static DateTime GetTimeFromUser(string expectedFormat, string topic, string hour)
+  {
+    string errorMessage = $"[red]Format mismatch. Use {expectedFormat}[/]";
+
+    string input = AnsiConsole.Prompt(
+    new TextPrompt<string>($"{topic} ({expectedFormat}): ")
+        .ValidationErrorMessage(errorMessage)
+        .Validate(value =>
+        {
+          return DateTime.TryParseExact(
+            value,
+            expectedFormat,
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
+            out _)
+            ? ValidationResult.Success()
+            : ValidationResult.Error(errorMessage);
+        }));
+
+    string day = DateTime.ParseExact(input, expectedFormat, CultureInfo.InvariantCulture).ToString();
+    string date = day + " " + hour;
+
+    return DateTime.ParseExact(day, DaTeStyleDB, CultureInfo.InvariantCulture);
+  }
 }
