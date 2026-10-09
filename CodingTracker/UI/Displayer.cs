@@ -53,4 +53,10 @@ internal class Displayer
       .AsciiBorder());
     AnsiConsole.WriteLine();
   }
+
+  internal static void NoEntriesFound()
+  {
+    AnsiConsole.MarkupLine($"[red]No entries have been found.[/]");
+    AnsiConsole.WriteLine();
+  }
 }
