@@ -38,6 +38,7 @@ internal class TimeFormatter
     return DateTime.Parse(dateString).ToString(DateStyleHour);
   }
 
+  internal static string IntToHHmm(int duration)
   {
     int hours = duration / 60;
     int minutes = duration % 60;
