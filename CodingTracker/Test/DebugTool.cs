@@ -1,8 +1,4 @@
-using System.Diagnostics;
-using System.Reflection.Metadata;
-using CodingTracker;
-
-namespace CodingSession;
+namespace CodingTracker;
 
 internal class DebugTool
 {

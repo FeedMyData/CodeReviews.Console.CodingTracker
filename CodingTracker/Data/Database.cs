@@ -1,4 +1,3 @@
-using CodingSession;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
